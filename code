@@ -194,7 +194,7 @@ void sachMuonHet(bookList *sach,int n){
 		printf(" Tat ca cac sach trong thu vien deu co the cho muon ");
 	}
 }
-void ghiFile(bookList *sach, int n) {
+void ghiFile(bookList *sach, int n){
 	getchar();
 	char fName[26];
     char fPath[100]="./src/data/";
@@ -208,22 +208,6 @@ void ghiFile(bookList *sach, int n) {
 		fprintf(fOut, "%-15s %-10s %-10s %-10s %-10d %-10d\n", (sach+i)->maSach, (sach+i)->tenSach, (sach+i)->theLoai, (sach+i)->nxb, (sach+i)->tongSoLuong, (sach+i)->soLuongHienTai);
 	}
 	fclose(fOut);
-}
-void docTuFileDuLieu(bookList *sach,int n){
-	FILE *f ;
-	bookList sachTam1 ;
-	f=fopen("DULIEU.NTL","rb");
-	if (f==NULL )
-		printf("\nDU LIEU KO TON TAI .DA TAO MOI FILE DU LIEU  \n");
-	else{	
-	    printf("\nDA TAI DU LIEU TU FILE DU LIEU  \n");
-		fread(&n,sizeof(int),1,f);
-		for (int i=0;i<n;i++){
-			fread(&sachTam1,sizeof(bookList),1,f);
-			*(sach+i)=sachTam1;
-		}
-		fclose(f);	
-	}
 }
 void pressAnyKey() {
     printf("\n\nBam phim bat ky de tiep tuc...");
@@ -244,11 +228,11 @@ void menu(){
 		printf("\n 		#======================================================#");
 		printf("\n 		#=====================Quan Ly Sach=====================#");
 		printf("\n 		#======================================================#");
-		printf("\n 		# 1-Them sach moi         ## 5-Sach theo the loai      #");
-		printf("\n 		# 2-Muc luc sach          ## 6-Xoa sach                #");
-		printf("\n 		# 3-Tim sach              ## 7-Sach muon het           #");
-		printf("\n 		# 4-Sua sach              ## 0-Thong Tin               #");
-		printf("\n 		#             ## 8-Thoat chuong trinh                  #");
+		printf("\n 		# 1-Them sach moi         ## 6-Xoa sach                #");
+		printf("\n 		# 2-Muc luc sach          ## 7-Sach muon het           #");
+		printf("\n 		# 3-Tim sach              ## 8-Ghi file                #");
+		printf("\n 		# 4-Sua sach              ## 9-Thong Tin               #");
+		printf("\n 		# 5-Sach theo the loai    ## 0-Thoat chuong trinh      #");
 		printf("\n 		#======================================================#");
 		printf("\n 		########################################################");
 		printf("\nNhap lua chon : ");
@@ -320,7 +304,16 @@ void menu(){
                 }
                 pressAnyKey();
                 break;
-			case 8:
+            case 8:
+                if(daNhap){
+                    printf("\nBan da chon luu file ");
+                    ghiFile(sach,n);
+                }else{
+                    printf("\nNhap danh sach sach truoc!!!!");
+                }
+                pressAnyKey();
+                break;
+			case 9:
                 printf("\nBan da chon hien thi thong tin  ");
                 thongTin();
                 pressAnyKey();
@@ -360,8 +353,8 @@ int main(){
 		}else{
 			printf("\nBan da nhap thanh cong!");		
             SetColor(76);
-			giaoDien:
+            giaoDien:
             menu();
 		}	
-	}while(1234);
+	}while(1);
 }
