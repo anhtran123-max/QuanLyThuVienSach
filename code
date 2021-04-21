@@ -1,8 +1,18 @@
+/////#####################################################################
+/////#######			PLEASE DO NOT COPYRIGHT IN MANY FORMS      #######
+/////#####################################################################
+/////###		Ho ten:  Tran Duc Anh         MSSV:6151071034          ###
+/////###		Lop :CNTT K61                                          ###
+/////###		BAI TAP LON LAP TRINH NANG CAO                         ###
+/////###		Moi truong thuc hien: DEV C++                          ###
+/////###  BM CNTT - DH GIAO THONG VAN TAI PHAN HIEU TAI TP.HCM       ###
+/////#####################################################################
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
 #include<conio.h>
 #include<windows.h>
+//============khai bao dulieu=========
 struct book_st{
 	char maSach[6];
 	char tenSach[30];
@@ -12,6 +22,47 @@ struct book_st{
 	int soLuongHienTai;
 };
 typedef book_st bookList;
+//====het du lieu sach================
+//====het phan khai bao du lieu========
+/*===================================================================*/
+//====khai bao ham==================
+int kiemTraSach(bookList *sach, int n ,bookList maKT);
+void nhapMotQuyenSach(bookList *sach);
+void nhapDanhSach(bookList *sach, int &n);
+void inMotQuyenSach(bookList *sach);
+void inDanhSach(bookList *sach, int n);
+void hienthiThongtin(bookList *sach, int n);
+void thongTin();
+void timSach(bookList *sach, int n);
+void sachTheLoai(bookList *sach,int n);
+void sapXepMaSach(bookList *sach, int n);
+void xoaSach(bookList *sach,int n);
+void suaSach(bookList *sach,int n);
+void sachMuonHet(bookList *sach,int n);
+void ghiFile(bookList *sach, int n);
+void pressAnyKey();
+void menu();
+void SetColor(WORD color);
+//====ket thuc khai bao ham===========================
+/*======================================================================*/
+//=================HAM MAIN===========================
+//#######################################################################
+int main(){
+	system("color 73");
+	int pass=1234;
+    do{
+		printf("\nNhap mat khau de chay chuong trinh (mat khau co 4 so): ");
+		scanf("%d",&pass);
+		if(pass != 1234)
+			printf("\nMoi ban nhap lai!");	    		  	
+	}while( pass != 1234);
+	SetColor(76);
+    giaoDien:
+    menu();
+}
+//====het ham main================
+/*===================================================================*/
+//====ham kiem tra ma sach========
 int kiemTraSach(bookList *sach, int n ,bookList maKT){
 	for(int i=0;i<n;i++){
 		if(strcmp((sach+i)->maSach, maKT.maSach) == 0)
@@ -19,6 +70,9 @@ int kiemTraSach(bookList *sach, int n ,bookList maKT){
 	}
 	return -1;// tra ve -1 neu chua ton tai ma sach
 }
+//====het ham kiem tra ma sach================
+/*===================================================================*/
+//====ham nhap mot quyen sach=================
 void nhapMotQuyenSach(bookList *sach){
 	fflush(stdin);
 	printf("\n Nhap ma sach: ");
@@ -32,6 +86,9 @@ void nhapMotQuyenSach(bookList *sach){
 	printf("\n Nhap so luong sach: ");
 	scanf("%d",&sach->tongSoLuong);
 }
+//====het ham nhap mot quyen sach================
+/*===================================================================*/
+//====ham nhap danh sach=========================
 void nhapDanhSach(bookList *sach, int &n){
     printf("\nNhap so luong sach: ");
     scanf("%d",&n);
@@ -42,6 +99,9 @@ void nhapDanhSach(bookList *sach, int &n){
 	   (sach+i)->soLuongHienTai=(sach+i)->tongSoLuong;
     }
 }
+//====het ham nhap danh sach================
+/*===================================================================*/
+//====ham in mot quyen sach=================
 void inMotQuyenSach(bookList *sach){
 	printf("\n +============================================+");
 	printf("\n # 	Ma sach: %s",sach->maSach);
@@ -52,7 +112,9 @@ void inMotQuyenSach(bookList *sach){
 	printf("\n # 	So luong hien tai: %d",sach->soLuongHienTai);
 	printf("\n +============================================+");
 }
-
+//====het ham in mot quyen sach================
+/*===================================================================*/
+//====ham in danh sach=========================
 void inDanhSach(bookList *sach, int n){
 	printf("\n +===============DANH SACH QUYEN SACH===============+");
     for(int i=0;i<n;i++){
@@ -60,18 +122,26 @@ void inDanhSach(bookList *sach, int n){
         inMotQuyenSach(sach+i);	
 	}
 }
+//====het ham in danh sach================
+/*===================================================================*/
+//====ham hien thi thong tin==============
 void hienthiThongtin(bookList *sach, int n){
 	for (int i=0; i<n; i++){
 		printf("\n%-15s|| %-15s|| %-15s|| %-15s|| %-15d|| %-15d\n",(sach+i)->maSach, (sach+i)->tenSach, (sach+i)->theLoai, (sach+i)->nxb, (sach+i)->tongSoLuong, (sach+i)->soLuongHienTai);
 	}
 }
+//====het ham hien thi thong tin================
+/*===================================================================*/
+//====ham thong tin=============================
 void thongTin(){
 	printf("\n 		Chuong Trinh Quan Ly Thu Vien  ");
 	printf("\n 		Sinh vien: TRAN DUC ANH ");
 	printf("\n 		MSSV : 6151071034");
 	printf("\n 		Lop : CNTT K61 - Truong GTVT PH.TPHCM");
 }
-
+//====het ham thong tin================
+/*===================================================================*/
+//====ham tim sach=====================
 void timSach(bookList *sach, int n){
 	int viTri;
 	bookList sachTim;
@@ -87,6 +157,9 @@ void timSach(bookList *sach, int n){
 	printf("\n +===============THONG TIN SACH===============+");
 	inMotQuyenSach(sach);
 }
+//====het ham tim sach================
+/*===================================================================*/
+//====ham sach the loai===============
 void sachTheLoai(bookList *sach,int n){
 	char theLoaiSach[30];
 	int bienKT=0;
@@ -107,6 +180,9 @@ void sachTheLoai(bookList *sach,int n){
 		printf(" khong co the loai sach nay ");
 	}
 }
+//====het ham sach the loai================
+/*===================================================================*/
+//====ham sap xep ma sach==================
 void sapXepMaSach(bookList *sach, int n){
 	bookList temp;
 	for(int i=0; i<n-1; i++){
@@ -119,6 +195,9 @@ void sapXepMaSach(bookList *sach, int n){
 		}
 	}
 }
+//====het ham sap xep ma sach================
+/*===================================================================*/
+//====ham xoa sach===========================
 void xoaSach(bookList *sach,int n){
 	bookList sachCanXoa;
 	int viTri,bienLap;
@@ -141,6 +220,9 @@ void xoaSach(bookList *sach,int n){
 	else
 	    printf("\nKhong xoa duoc sach vi van co nguoi muon sach ");
 }
+//====het ham xoa sach================
+/*===================================================================*/
+//====ham sua sach====================
 void suaSach(bookList *sach,int n){
 	int viTri,soSachThem=0;
 	bookList sachCanSua;
@@ -177,6 +259,9 @@ void suaSach(bookList *sach,int n){
 	}
 	printf("\n Da sua xong ");
 }
+//====het ham sua sach================
+/*===================================================================*/
+//====ham sach muon het===============
 void sachMuonHet(bookList *sach,int n){
 	int bienKT=0;
 	printf("\n +========THONG TIN SACH CHO MUON HET=========+");
@@ -194,6 +279,9 @@ void sachMuonHet(bookList *sach,int n){
 		printf(" Tat ca cac sach trong thu vien deu co the cho muon ");
 	}
 }
+//====het ham sach muon het================
+/*===================================================================*/
+//====ham ghi file=========================
 void ghiFile(bookList *sach, int n){
 	getchar();
 	char fName[26];
@@ -209,11 +297,17 @@ void ghiFile(bookList *sach, int n){
 	}
 	fclose(fOut);
 }
-void pressAnyKey() {
+//====het ham ghi file================
+/*===================================================================*/
+//====ham pressAnyKey=================
+void pressAnyKey(){
     printf("\n\nBam phim bat ky de tiep tuc...");
     getch();
     system("cls");
 }
+//====het ham pressAnyKey================
+/*===================================================================*/
+//====ham menu======
 void menu(){
 	bookList *sach;
 	int n,key;
@@ -327,11 +421,14 @@ void menu(){
                 printf("\nBam phim bat ky de tiep tuc!");
                 printf("\n");
                 getch();
-                break;
-            
+                break;       
         }
     }
+    free(sach);
 }
+//====het ham menu================
+/*===================================================================*/
+//====ham SetColor================
 void SetColor(WORD color){ 
     HANDLE hConsoleOutput;
     hConsoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -341,20 +438,4 @@ void SetColor(WORD color){
     color &= 0x000f;
     wAttributes &= 0xfff0; wAttributes |= color;
     SetConsoleTextAttribute(hConsoleOutput, wAttributes);
-}
-int main(){
-	system("color 73");
-	int pass=1234;
-    do{
-		printf("\nNhap mat khau de chay chuong trinh (mat khau co 4 so): ");
-		scanf("%d",&pass);
-		if(pass != 1234){
-			printf("\nMoi ban nhap lai!");	    
-		}else{
-			printf("\nBan da nhap thanh cong!");		
-            SetColor(76);
-            giaoDien:
-            menu();
-		}	
-	}while(1);
 }
