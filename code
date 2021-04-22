@@ -48,16 +48,15 @@ void SetColor(WORD color);
 //=================HAM MAIN===========================
 //#######################################################################
 int main(){
-	system("color 72");
+	system("color 73");
 	int pass=1234;
     do{
-    	printf("\n");
-		printf("\n                  Nhap mat khau de chay chuong trinh (mat khau co 4 so): ");
+		printf("\nNhap mat khau de chay chuong trinh (mat khau co 4 so): ");
 		scanf("%d",&pass);
 		if(pass != 1234)
-			printf("\n                  Moi ban nhap lai!");	    		  	
+			printf("\nMoi ban nhap lai!");	    		  	
 	}while( pass != 1234);
-	SetColor(240);
+	SetColor(76);
     giaoDien:
     menu();
 }
@@ -76,25 +75,25 @@ int kiemTraSach(bookList *sach, int n ,bookList maKT){
 //====ham nhap mot quyen sach=================
 void nhapMotQuyenSach(bookList *sach){
 	fflush(stdin);
-	printf("\n    Nhap ma sach: ");
+	printf("\n Nhap ma sach: ");
 	gets(sach->maSach);
-	printf("\n    Nhap ten sach: ");
+	printf("\n Nhap ten sach: ");
 	gets(sach->tenSach);
-	printf("\n    Nhap the loai: ");
+	printf("\n Nhap the loai: ");
 	gets(sach->theLoai);
-	printf("\n    Nhap ten nha xuat ban: ");
+	printf("\n Nhap ten nha xuat ban: ");
 	gets(sach->nxb);	
-	printf("\n    Nhap so luong sach: ");
+	printf("\n Nhap so luong sach: ");
 	scanf("%d",&sach->tongSoLuong);
 }
 //====het ham nhap mot quyen sach================
 /*===================================================================*/
 //====ham nhap danh sach=========================
 void nhapDanhSach(bookList *sach, int &n){
-    printf("\n    Nhap so luong sach: ");
+    printf("\nNhap so luong sach: ");
     scanf("%d",&n);
     for(int i=0;i<n;i++){
-       printf("    Nhap quyen sach thu %d:\n",i+1);
+       printf("Nhap quyen sach thu %d:\n",i+1);
        sach=(bookList*)realloc(sach,n*sizeof(bookList));
        nhapMotQuyenSach(&*(sach+i));
 	   (sach+i)->soLuongHienTai=(sach+i)->tongSoLuong;
@@ -119,7 +118,7 @@ void inMotQuyenSach(bookList *sach){
 void inDanhSach(bookList *sach, int n){
 	printf("\n +===============DANH SACH QUYEN SACH===============+");
     for(int i=0;i<n;i++){
-	    printf("\n   Quyen sach thu %d:",i+1);
+	    printf("\nQuyen sach thu %d:",i+1);
         inMotQuyenSach(sach+i);	
 	}
 }
@@ -144,23 +143,21 @@ void thongTin(){
 /*===================================================================*/
 //====ham tim sach=====================
 void timSach(bookList *sach, int n){
-	int viTri;
+	int bienKT=0;
 	bookList sachTim;
-	printf("\n   Tim sach");
-	printf("\n   Ma sach da ton tai: ");
+	printf("\nTim sach");
+	printf("\nNhap ma sach can tim:");
+	fflush(stdin);
+	gets(sachTim.maSach);
 	for(int i=0;i<n;i++){
-		printf("\n # 	Ma sach: %s",sach->maSach);
+		if(strcmp((sach+i)->maSach,sachTim.maSach)==0){
+			inMotQuyenSach(sach+i);
+			bienKT++;
+		}
 	}
-	do{
-		printf("\n   Nhap ma sach can tim:");
-		gets(sachTim.maSach);
-		viTri=kiemTraSach(sach,n,sachTim);
-		if(viTri != -1)
-			break;
-		printf("\n   Ma sach khong ton tai .xin vui long nhap lai");
-	}while(1);
-	printf("\n +===============THONG TIN SACH===============+");
-	inMotQuyenSach(sach);
+	if(bienKT==0){
+		printf("\n ma sach khong ton tai!!!");
+	}
 }
 //====het ham tim sach================
 /*===================================================================*/
@@ -168,7 +165,7 @@ void timSach(bookList *sach, int n){
 void sachTheLoai(bookList *sach,int n){
 	char theLoaiSach[30];
 	int bienKT=0;
-	printf("\n    Nhap the loai muon thong ke: ");
+	printf("\n Nhap the loai muon thong ke: ");
 	fflush(stdin);
 	gets(theLoaiSach);
 	printf("\n +========THONG TIN SACH THEO THE LOAI========+");
@@ -192,7 +189,7 @@ void sapXepMaSach(bookList *sach, int n){
 	bookList temp;
 	for(int i=0; i<n-1; i++){
 		for(int j=i+1; j<n; j++){
-			if(strcmp((sach+i)->maSach,(sach+j)->maSach)<0){
+			if(strcmp((sach+i)->maSach,(sach+j)->maSach)>0){
 				temp = *(sach+i);
 				*(sach+i)=*(sach+j);
 				*(sach+j)=temp;
@@ -205,64 +202,70 @@ void sapXepMaSach(bookList *sach, int n){
 //====ham xoa sach===========================
 void xoaSach(bookList *sach,int n){
 	bookList sachCanXoa;
-	int viTri,bienLap;
-	printf("\n   Xoa sach...");
-	do{
-		printf("\n   Nhap ma sach:");
-		gets(sachCanXoa.maSach);
-		viTri=kiemTraSach(sach,n,sachCanXoa);
-		if(viTri!=-1)
-			break;
-		printf("\n   Ma sach khong ton tai .xin vui long nhap lai");
-	}while(1);
-	if((sach+viTri)->soLuongHienTai == (sach+viTri)->tongSoLuong){
-	    for(bienLap=viTri;bienLap<n;bienLap++){
-	       *(sach+bienLap)=*(sach+bienLap+1);
-	       n=n-1;
-	    }
-	    printf("\n   Da xoa xong");
+	int bienKT=0,bienLap;
+	printf("\n xoa sach...");
+	printf("\n nhap ma sach:");
+	fflush(stdin);
+	gets(sachCanXoa.maSach);
+	for(int i=0;i<n;i++){
+		if(strcmp((sach+i)->maSach,sachCanXoa.maSach)==0){
+			if((sach+i)->soLuongHienTai == (sach+i)->tongSoLuong){
+	            for(bienLap=i;bienLap<n;i++){
+	                *(sach+bienLap)=*(sach+bienLap+1);
+	                n=n-1;
+	            }
+	            printf("\n Da xoa xong");
+	        }
+	        else{
+	        	printf("\nKhong xoa duoc sach vi van co nguoi muon sach ");
+			}
+			bienKT++;
+		}
 	}
-	else
-	    printf("\n   Khong xoa duoc sach vi van co nguoi muon sach ");
+	if(bienKT==0){
+		printf("\n ma sach khong ton tai!!!");
+    }
 }
 //====het ham xoa sach================
 /*===================================================================*/
 //====ham sua sach====================
 void suaSach(bookList *sach,int n){
-	int viTri,soSachThem=0;
+	int bienKT=0,soSachThem=0;
 	bookList sachCanSua;
-	printf("\n   SUA CHI TIET SACH ");
-	do{
-	printf("\n   Nhap ma sach can sua :");
+	printf("\n SUA CHI TIET SACH ");
+	printf("\n Nhap ma sach can sua :");
+	fflush(stdin);
 	gets(sachCanSua.maSach);
-	viTri=kiemTraSach(sach,n,sachCanSua);
-	if(viTri!=-1)
-	    break;
-	printf("\n   Ma sach khong ton tai .xin vui long nhap lai");
-	}while(1);
-	printf("\n   Tim thay ma sach -lan luot sua thong tin:");
-	if((sach+viTri)->soLuongHienTai == (sach+viTri)->tongSoLuong){
-		fflush(stdin);
-		printf("\n   Nhap ten sach: ");
-		gets(sachCanSua.tenSach);
-		printf("\n   Nhap the loai: ");
-		gets(sachCanSua.theLoai);
-		printf("\n   Nhap ten nha xuat ban: ");
-		gets(sachCanSua.nxb);	
-		printf("\n   Nhap so luong sach: ");
-		scanf("%d",sachCanSua.tongSoLuong);
-		sachCanSua.soLuongHienTai=sachCanSua.tongSoLuong;
-		*(sach+viTri)=sachCanSua;
-	}
-	else
-	{
-		printf("\n   Khong sua duoc ten sach vi van co nguoi muon sach nay");
-		printf("\n   Ban chi co the them so luong sach .\n So luong sach them la: ");
-		scanf("%d",soSachThem);
-		(sach+viTri)->tongSoLuong=(sach+viTri)->tongSoLuong+soSachThem;
-		(sach+viTri)->soLuongHienTai=(sach+viTri)->soLuongHienTai+soSachThem;
-	}
-	printf("\n   Da sua xong ");
+	for(int i=0;i<n;i++){
+		if(strcmp((sach+i)->maSach,sachCanSua.maSach)==0){
+			printf("\nTim thay ma sach -lan luot sua thong tin:");
+        	if((sach+i)->soLuongHienTai == (sach+i)->tongSoLuong){
+		        fflush(stdin);
+	        	printf("\n Nhap ten sach: ");
+		        gets(sachCanSua.tenSach);
+		        printf("\n Nhap the loai: ");
+		        gets(sachCanSua.theLoai);
+		        printf("\n Nhap ten nha xuat ban: ");
+		        gets(sachCanSua.nxb);	
+		        printf("\n Nhap so luong sach: ");
+		        scanf("%d",sachCanSua.tongSoLuong);
+		        sachCanSua.soLuongHienTai=sachCanSua.tongSoLuong;
+		        *(sach+i)=sachCanSua;
+         	}
+	        else{
+		        printf("\n khong sua duoc ten sach vi van co nguoi muon sach nay");
+	        	printf("\n ban chi co the them so luong sach .\n So luong sach them la: ");
+		        scanf("%d",soSachThem);
+	        	(sach+i)->tongSoLuong=(sach+i)->tongSoLuong+soSachThem;
+		        (sach+i)->soLuongHienTai=(sach+i)->soLuongHienTai+soSachThem;
+	        }
+	        printf("\n Da sua xong ");
+			bienKT++;
+		}
+        if(bienKT==0){
+	     	printf("\n ma sach khong ton tai!!!");
+	    }
+    }
 }
 //====het ham sua sach================
 /*===================================================================*/
@@ -281,7 +284,7 @@ void sachMuonHet(bookList *sach,int n){
 	}
 	if(bienKT==0)
 	{
-		printf("   Tat ca cac sach trong thu vien deu co the cho muon ");
+		printf(" Tat ca cac sach trong thu vien deu co the cho muon ");
 	}
 }
 //====het ham sach muon het================
@@ -291,7 +294,7 @@ void ghiFile(bookList *sach, int n){
 	getchar();
 	char fName[26];
     char fPath[100]="./src/data/";
-	printf("\n   Nhap ten file: ");
+	printf("\nNhap ten file: ");
 	gets(fName);
 	printf("\n");
     strcat(fPath,fName);
@@ -306,7 +309,7 @@ void ghiFile(bookList *sach, int n){
 /*===================================================================*/
 //====ham pressAnyKey=================
 void pressAnyKey(){
-    printf("\n\n Bam phim bat ky de tiep tuc...");
+    printf("\n\nBam phim bat ky de tiep tuc...");
     getch();
     system("cls");
 }
@@ -327,106 +330,106 @@ void menu(){
 		printf("\n 		#======================================================#");
 		printf("\n 		#=====================Quan Ly Sach=====================#");
 		printf("\n 		#======================================================#");
-		printf("\n 		# 1-Them sach moi         ## 6-Xoa sach                #");
-		printf("\n 		# 2-Muc luc sach          ## 7-Sach muon het           #");
+		printf("\n 		# 1-Them sach moi         ## 6-Sua sach                #");
+		printf("\n 		# 2-Muc luc sach          ## 7-Xoa sach                #");
 		printf("\n 		# 3-Tim sach              ## 8-Ghi file                #");
-		printf("\n 		# 4-Sua sach              ## 9-Thong Tin               #");
+		printf("\n 		# 4-Sach muon het         ## 9-Thong Tin               #");
 		printf("\n 		# 5-Sach theo the loai    ## 0-Thoat chuong trinh      #");
 		printf("\n 		#======================================================#");
 		printf("\n 		########################################################");
-		printf("\n      Nhap lua chon : ");
+		printf("\nNhap lua chon : ");
         scanf("%d",&key);
         switch(key){
             case 1:
-                printf("\n Ban da chon them sach moi!");
+                printf("\nBan da chon them sach moi!");
                 printf("\n");
                 nhapDanhSach(sach,n);
-                printf("\n Ban da nhap thanh cong!");
+                printf("\nBan da nhap thanh cong!");
                 printf("\n");
                 daNhap = true;
                 pressAnyKey();
 				break;
 			case 2:
                 if(daNhap){
-                    printf("\n Ban da chon in ra muc luc sach.\n");
+                    printf("\nBan da chon in ra muc luc sach.\n");
                     printf("\n");
                     printf("\n%-15s|| %-15s|| %-15s|| %-15s|| %-15s|| %-15s\n", "Ma sach", "Ten sach", "The loai", "Nha xuat ban", "Tong so luong", "So luong hien tai");
                     sapXepMaSach(sach,n);
                     hienthiThongtin(sach,n);
                 }else{
-                    printf("\n Nhap danh sach sach truoc!!!!");
+                    printf("\nNhap danh sach sach truoc!!!!");
                 }
                 pressAnyKey();
                 break;
             case 3:
                 if(daNhap){
-                    printf("\n Ban da chon tim sach!");
+                    printf("\nBan da chon tim sach!");
                     timSach(sach,n);
                 }else{
-                    printf("\n Nhap danh sach sach truoc!!!!");
+                    printf("\nNhap danh sach sach truoc!!!!");
                 }
                 pressAnyKey();
                 break;
             case 4:
                 if(daNhap){
-                    printf("\n Ban da chon sua sach.");
-                    suaSach(sach,n);
+                    printf("\nBan da chon hien thi cac quyen sach da muon ");
+                    sachMuonHet(sach,n);
                 }else{
-                    printf("\n Nhap danh sach sach truoc!!!!");
+                    printf("\nNhap danh sach sach truoc!!!!");
                 }
                 pressAnyKey();
                 break;
             case 5:
                 if(daNhap){
-                    printf("\n Ban da chon tim sach theo the loai");
+                    printf("\nBan da chon tim sach theo the loai");
                     sachTheLoai(sach,n);
                 }else{
-                    printf("\n Nhap danh sach sach truoc!!!!");
+                    printf("\nNhap danh sach sach truoc!!!!");
                 }
                 pressAnyKey();
                 break;
-			case 6:
+            case 6:
                 if(daNhap){
-                    printf("\n Ban da chon xoa sach");
+                    printf("\nBan da chon sua sach.");
+                    suaSach(sach,n);
+                }else{
+                    printf("\nNhap danh sach sach truoc!!!!");
+                }
+                pressAnyKey();
+                break;
+			case 7:
+                if(daNhap){
+                    printf("\nBan da chon xoa sach");
                     xoaSach(sach,n);
                 }else{
-                    printf("\n Nhap danh sach sach truoc!!!!");
+                    printf("\nNhap danh sach sach truoc!!!!");
                 }
                 pressAnyKey();
                 break;	
-			case 7:
-                if(daNhap){
-                    printf("\n Ban da chon hien thi cac quyen sach da muon ");
-                    sachMuonHet(sach,n);
-                }else{
-                    printf("\n Nhap danh sach sach truoc!!!!");
-                }
-                pressAnyKey();
-                break;
             case 8:
                 if(daNhap){
-                    printf("\n Ban da chon luu file ");
+                    printf("\nBan da chon luu file ");
                     ghiFile(sach,n);
                 }else{
-                    printf("\n Nhap danh sach sach truoc!!!!");
+                    printf("\nNhap danh sach sach truoc!!!!");
                 }
                 pressAnyKey();
                 break;
 			case 9:
-                printf("\n Ban da chon hien thi thong tin  ");
+                printf("\nBan da chon hien thi thong tin  ");
                 thongTin();
                 pressAnyKey();
                 break;
-			case 0:
-                printf("\n Ban da chon thoat chuong trinh!");
-                flat =0;
-                false;
             default:
-                printf("\n Khong co chuc nang nay!");
-                printf("\n Bam phim bat ky de tiep tuc!");
+                printf("\nKhong co chuc nang nay!");
+                printf("\nBam phim bat ky de tiep tuc!");
                 printf("\n");
                 getch();
-                break;       
+                break;
+			case 0:
+                printf("\nBan da chon thoat chuong trinh!");
+                flat =0;
+                false;       
         }
     }
     free(sach);
