@@ -26,7 +26,6 @@ typedef book_st bookList;
 //====het phan khai bao du lieu========
 /*===================================================================*/
 //====khai bao ham==================
-int kiemTraSach(bookList *sach, int n ,bookList maKT);
 void nhapMotQuyenSach(bookList *sach);
 void nhapDanhSach(bookList *sach, int &n);
 void inMotQuyenSach(bookList *sach);
@@ -48,7 +47,7 @@ void SetColor(WORD color);
 //=================HAM MAIN===========================
 //#######################################################################
 int main(){
-	system("color 73");
+	system("color 72");
 	int pass=1234;
     do{
 		printf("\nNhap mat khau de chay chuong trinh (mat khau co 4 so): ");
@@ -62,17 +61,7 @@ int main(){
 }
 //====het ham main================
 /*===================================================================*/
-//====ham kiem tra ma sach========
-int kiemTraSach(bookList *sach, int n ,bookList maKT){
-	for(int i=0;i<n;i++){
-		if(strcmp((sach+i)->maSach, maKT.maSach) == 0)
-		return i;//tra ve i neu ma sach ton tai 
-	}
-	return -1;// tra ve -1 neu chua ton tai ma sach
-}
-//====het ham kiem tra ma sach================
-/*===================================================================*/
-//====ham nhap mot quyen sach=================
+//====ham nhap mot quyen sach========
 void nhapMotQuyenSach(bookList *sach){
 	fflush(stdin);
 	printf("\n Nhap ma sach: ");
