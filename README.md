@@ -1,2 +1,2 @@
-# quan_li_thu_vien
-chuong trinh quan li thu vien
+# quan_li_sach
+chuong trinh quan li sach
