@@ -33,7 +33,6 @@ void thongKeSachTheoTheLoai(Sach *sach,int soluong);
 void xoaSach(Sach *sach,int soluong);
 void suaTenSach(Sach *sach,int soluong);
 void ghiFile(Sach *sach, int n);
-void docFile(Sach *sach, int soluong);
 void pressAnyKey();
 void menu();
 int main(){
@@ -65,8 +64,8 @@ void menu(){
 		printf("\n 		# 1-Them sach moi               ## 5-Sua ten sach         #");
 		printf("\n 		# 2-Muc luc sach                ## 6-Xoa sach             #");
 		printf("\n 		# 3-Tim sach                    ## 7-Ghi file             #");
-		printf("\n 		# 4-Thong ke sach theo the loai ## 8-Doc file             #");
-		printf("\n 		# 0-Thoat chuong trinh          ## 9-Thong tin tac gia    #");
+		printf("\n 		# 4-Thong ke sach theo the loai ## 8-Thong tin tac gia    #");
+		printf("\n 		#                 0-Thoat chuong trinh                    #");
 		printf("\n 		#=========================================================#");
 		printf("\n 		###########################################################");
 		printf("\n  Nhap lua chon : ");
@@ -138,16 +137,7 @@ void menu(){
                 }
                 pressAnyKey();
                 break;
-            case 8:
-                if(!daNhap){
-                    printf("\n   Ban da chon doc file!");
-                    docFile(sach,soluong);
-                }else{
-                    printf("\n   Nhap danh sach sach truoc!!!!");
-                }
-                pressAnyKey();
-                break;
-			case 9:
+			case 8:
                 printf("\n   Ban da chon hien thi thong tin!");
                 tacGia();
                 pressAnyKey();
@@ -322,55 +312,11 @@ void ghiFile(Sach *danhsach, int soluong){
 	printf("\n  Luu file thanh cong");
 	fclose(fOut);
 }
-void docFile(struct SinhVien* ds, int* slsv) {
-	FILE* fOut = fopen("SV.txt", "r");
-	int i = 0;
-	if(fOut) {
-		for(;;) {
-			struct SinhVien sv;
-			fscanf(fOut, "%10d %10s %20[^\n] %10s %10d %10s %10f %10f %10f %10f\n",
-			&sv.ma, sv.hoVaTen.ho, sv.hoVaTen.dem, sv.hoVaTen.ten, &sv.tuoi, sv.gioiTinh,
-			&sv.diem.toan, &sv.diem.van, &sv.diem.anh, &sv.diem.tbc);
-			
-			ds[i++] = sv;
-			if(feof(fOut)) { // thoat chuong trinh
-				break;
-			}
-		}
-	}
-	
-	fclose(fOut);
-	*slsv = i;
-} 
-void docFile(Sach *danhsach, int *soluong){
-	getchar();
-    char fPath[100]="sach.bin";       
-	FILE* fOut = fopen(fPath, "rb");
-	if(fOut == NULL){
-		printf("\n Loi mo file!");
-		exit(1);
-	} 
-	char ten[100] = "";
-	fscanf(fOut,"%s", &ten);
-	printf("%s", ten);
-	
-	char tennxb[100] = "";
-	fscanf(fOut,"%s", &tennxb);
-	printf("%s", tennxb);
-	int slSach;
-	fscanf(fOut,"%d", &slSach);
-	printf("%d", slSach);
-	
-//	fprintf(fOut, "%-15s|| %-10s|| %-10s|| %-10s|| %-10s\n", "Ma sach", "Ten sach", "The loai", "Nha xuat ban", "Tong so luong");
-//	for(int i = 0;i<soluong; i++) {
-		//fscanf(fOut, "%-15s|| %-10s|| %-10s|| %-10s|| %-10d\n", (danhsach+i)->maSach, (danhsach+i)->tenSach, (danhsach+i)->theLoai, (danhsach+i)->nxb, (danhsach+i)->tongSoLuong);
-//	}
-	fclose(fOut);
-}
 void pressAnyKey(){
     printf("\n\n   Bam phim bat ky de tiep tuc...");
     getch();
     system("cls");
 }
+
 
 
